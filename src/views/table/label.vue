@@ -2,10 +2,16 @@
 <div>
   <br>
   <el-form :inline="true">
-          <el-form-item label="频道名称">
-<el-input v-model="searchMap.name" placeholder="频道名称"></el-input></el-form-item>
+          <el-form-item label="标签名称">
+<el-input v-model="searchMap.labelname" placeholder="标签名称"></el-input></el-form-item>
           <el-form-item label="状态">
 <el-input v-model="searchMap.state" placeholder="状态"></el-input></el-form-item>
+          <el-form-item label="使用数量">
+<el-input v-model="searchMap.count" placeholder="使用数量"></el-input></el-form-item>
+          <el-form-item label="是否推荐">
+<el-input v-model="searchMap.recommend" placeholder="是否推荐"></el-input></el-form-item>
+          <el-form-item label="粉丝数">
+<el-input v-model="searchMap.fans" placeholder="粉丝数"></el-input></el-form-item>
 
     <el-button type="primary" @click="fetchData()">查询</el-button>
     <el-button type="primary" @click="handleEdit('')">新增</el-button>
@@ -14,9 +20,13 @@
     :data="list"
     border
     style="width: 100%">
-          <el-table-column prop="id" label="ID" width="100"></el-table-column>
-          <el-table-column prop="name" label="频道名称" width="300"></el-table-column>
-          <el-table-column prop="state" label="状态" width="100"></el-table-column>
+          <el-table-column prop="id" label="标签ID" width="80"></el-table-column>
+          <el-table-column prop="labelname" label="标签名称" width="80"></el-table-column>
+          <el-table-column prop="state" label="状态" width="80"></el-table-column>
+          <el-table-column prop="count" label="使用数量" width="80"></el-table-column>
+          <el-table-column prop="recommend" label="是否推荐" width="80"></el-table-column>
+          <el-table-column prop="fans" label="粉丝数" width="80"></el-table-column>
+
     <el-table-column
       fixed="right"
       label="操作"
@@ -35,11 +45,14 @@
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>
+    </el-pagination>  
   <el-dialog title="编辑" :visible.sync="dialogFormVisible">
     <el-form label-width="80px">
-        <el-form-item label="频道名称"><el-input v-model="pojo.name"></el-input></el-form-item>
+        <el-form-item label="标签名称"><el-input v-model="pojo.labelname"></el-input></el-form-item>
         <el-form-item label="状态"><el-input v-model="pojo.state"></el-input></el-form-item>
+        <el-form-item label="使用数量"><el-input v-model="pojo.count"></el-input></el-form-item>
+        <el-form-item label="是否推荐"><el-input v-model="pojo.recommend"></el-input></el-form-item>
+        <el-form-item label="粉丝数"><el-input v-model="pojo.fans"></el-input></el-form-item>
 
         <el-button type="primary" @click="handleSave()">保存</el-button>
         <el-button @click="dialogFormVisible = false" >关闭</el-button>
@@ -48,7 +61,7 @@
 </div>
 </template>
 <script>
-import channelApi from '@/api/channel'
+import labelApi from '@/api/label'
 export default {
   data() {
     return {
@@ -68,13 +81,13 @@ export default {
   },
   methods: {
     fetchData() {
-      channelApi.search(this.currentPage, this.pageSize, this.searchMap).then(response => {
+      labelApi.search(this.currentPage, this.pageSize, this.searchMap).then(response => {
         this.list = response.data.rows
         this.total = response.data.total
       })
     },
     handleSave() {
-      channelApi.update(this.id, this.pojo).then(response => {
+      labelApi.update(this.id, this.pojo).then(response => {
         this.$message({
           message: response.message,
           type: (response.flag ? 'success' : 'error')
@@ -89,7 +102,7 @@ export default {
       this.id = id
       this.dialogFormVisible = true // 打开窗口
       if (id !== '') { // 修改
-        channelApi.findById(id).then(response => {
+        labelApi.findById(id).then(response => {
           if (response.flag) {
             this.pojo = response.data
           }
@@ -104,7 +117,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        channelApi.deleteById(id).then(response => {
+        labelApi.deleteById(id).then(response => {
           this.$message({ message: response.message, type: (response.flag ? 'success' : 'error') })
           if (response.flag) {
             this.fetchData() // 刷新数据

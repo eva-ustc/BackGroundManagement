@@ -28,7 +28,7 @@
           <el-table-column prop="createtime" label="发表日期" width="80"></el-table-column>
           <el-table-column prop="updatetime" label="修改日期" width="80"></el-table-column>
           <el-table-column prop="ispublic" label="是否公开" width="80"></el-table-column>
-          <el-table-column prop="istop" label="是否置顶" width="80"></el-table-column>         
+          <el-table-column prop="istop" label="是否置顶" width="80"></el-table-column>
           <el-table-column prop="state" label="审核状态" width="80"></el-table-column>
           <el-table-column prop="channelid" label="所属频道" width="80"></el-table-column>
           <el-table-column prop="type" label="类型" width="80"></el-table-column>
@@ -38,7 +38,7 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="handleEdit(scope.row.id)" type="text" size="small">审核</el-button>        
+        <el-button @click="handleEdit(scope.row.id)" type="text" size="small">审核</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -50,10 +50,11 @@
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>  
+    </el-pagination>
   <el-dialog title="文章详情" :visible.sync="dialogFormVisible">
-      {{pojo.title}}
-      <hr>  
+      标题 : {{pojo.title}}
+      <hr>
+      正文 :
       <div v-html="pojo.content"></div>
 
         <el-button type="primary" @click="handleExamine(pojo.id)">审核</el-button>
@@ -124,9 +125,9 @@ export default {
           this.$message({ message: response.message, type: (response.flag ? 'success' : 'error') })
           if (response.flag) {
             this.fetchData() // 刷新数据
-            
+
           }
-          this.dialogFormVisible = false 
+          this.dialogFormVisible = false
         })
       })
     },
@@ -140,11 +141,11 @@ export default {
           this.$message({ message: response.message, type: (response.flag ? 'success' : 'error') })
           if (response.flag) {
             this.fetchData() // 刷新数据
-            
+
           }
-          this.dialogFormVisible = false 
+          this.dialogFormVisible = false
         })
-      })      
+      })
     }
   }
 }

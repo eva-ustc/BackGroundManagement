@@ -35,7 +35,7 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="handleExamine(scope.row.id)" type="text" size="small">审核</el-button>
+        <el-button @click="handleExamine(scope.row.id)" type="text" size="small">审核通过</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -47,14 +47,20 @@
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
-    </el-pagination>  
+    </el-pagination>
   <el-dialog title="编辑" :visible.sync="dialogFormVisible">
     <el-form label-width="80px">
         <el-form-item label="专栏名称"><el-input v-model="pojo.name"></el-input></el-form-item>
         <el-form-item label="专栏简介"><el-input v-model="pojo.summary"></el-input></el-form-item>
         <el-form-item label="用户ID"><el-input v-model="pojo.userid"></el-input></el-form-item>
-        <el-form-item label="申请日期"><el-input v-model="pojo.createtime"></el-input></el-form-item>
-        <el-form-item label="审核日期"><el-input v-model="pojo.checktime"></el-input></el-form-item>
+        <el-form-item label="申请日期">
+          <!--<el-input v-model="pojo.createtime"></el-input>-->
+          <el-date-picker type="date" v-model="pojo.createtime"  placeholder="申请日期"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="审核日期">
+          <!--<el-input v-model="pojo.checktime"></el-input>-->
+          <el-date-picker type="date" v-model="pojo.checktime"  placeholder="审核日期"></el-date-picker>
+        </el-form-item>
         <el-form-item label="状态"><el-input v-model="pojo.state"></el-input></el-form-item>
 
         <el-button type="primary" @click="handleSave()">保存</el-button>
@@ -129,7 +135,7 @@ export default {
       })
     },
     handleExamine(id){
-      this.$confirm('确定要审核此纪录吗?', '提示', {
+      this.$confirm('确定审核通过此记录吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -140,7 +146,7 @@ export default {
             this.fetchData() // 刷新数据
           }
         })
-      })      
+      })
     }
   }
 }

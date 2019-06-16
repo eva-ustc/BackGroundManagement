@@ -38,12 +38,18 @@
 
 <script>
 import { getList } from '@/api/table'
+//   import {getList} from "../../api/city"
+import BaseApi from '@/api/city'
 
 export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      total: 0, // 总记录数
+      currentPage: 1, // 当前页
+      pageSize: 10, // 每页大小
+      searchMap: {}, // 查询条件
     }
   },
   filters: {
@@ -62,8 +68,14 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      /*getList(this.listQuery).then(response => {
         this.list = response.data.items
+        this.listLoading = false
+      })*/
+      BaseApi.search(this.currentPage, this.pageSize, this.searchMap).then(response =>{
+        // this.list = response.data.items
+        this.list = response.data.rows
+        this.total = response.data.total
         this.listLoading = false
       })
     }

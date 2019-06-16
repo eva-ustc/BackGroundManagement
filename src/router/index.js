@@ -38,23 +38,36 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
+    // path: '/example',
+    /*path: '/example',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
+    meta: { title: '基本信息管理', icon: 'example' },*/
+    path: '/base',
+    component: Layout,
+    redirect: '/base/city',
+    name: 'Base',
     meta: { title: '基本信息管理', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+        // path: 'table',
+        // name: 'Table',
+        // component: () => import('@/views/table/index'),
+        path: 'city',
+        name: 'City',
+        component: () => import('@/views/table/city'),
         meta: { title: '城市管理', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '标签管理', icon: 'tree' }
+        // path: 'tree',
+        // name: 'Tree',
+        // component: () => import('@/views/tree/index'),
+        // meta: { title: '标签管理', icon: 'tree' }
+        path: 'label',
+        name: 'Label',
+        component: () => import('@/views/table/label'),
+        meta: { title: '标签管理', icon: 'table' }
       }
     ]
   },
@@ -110,7 +123,7 @@ export const constantRouterMap = [
       },
       {
         path: 'article',
-        name: 'article',
+        name: 'article2',
         component: () => import('@/views/table/article'),
         meta: { title: '文章审核', icon: 'table' }
       }
